@@ -1,6 +1,9 @@
 #include "GameObject.h"
+#include <vector>
+#include "SDLGameObject.h"
 
-void GameObject::load(int x, int y, int width, int height, std::string textureID)
+void GameObject::load(int x, int y, int width, int height,
+	std::string textureID)
 {
 	m_x = x;
 	m_y = y;
@@ -9,13 +12,13 @@ void GameObject::load(int x, int y, int width, int height, std::string textureID
 	m_textureID = textureID;
 	m_currentRow = 1;
 	m_currentFrame = 1;
-
-
 }
 
-void GameObject::draw(SDL_Renderer *pRenderer)
+void GameObject::draw(SDL_Renderer* pRenderer)
 {
-	TheTextureManager::Instance()->drawFrame(m_textureID, m_x, m_y, m_width, m_height, m_currentRow, m_currentFrame, pRenderer);
+	TheTextureManager::Instance()->drawFrame(m_textureID,
+		m_x, m_y, m_width, m_height,
+		m_currentRow, m_currentFrame, pRenderer);
 }
 
 void GameObject::update()
