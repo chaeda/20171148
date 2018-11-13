@@ -1,6 +1,5 @@
-#include "Game.h"
-#include <iostream>
-using namespace std;
+#include "game.h"
+
 
 Game* g_game = 0;
 
