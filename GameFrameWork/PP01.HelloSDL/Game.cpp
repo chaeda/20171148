@@ -20,23 +20,41 @@ bool Game::init(const char*title, int xpos, int ypos,
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 		}
 		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+
+		//텍스쳐 등록
 		if (!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
 		{
 			return false;
 		}
-		////토끼 애니메이션 추가
-		//if (!TheTextureManager::Instance()->load("Assets/animate-Rabbit.png", "Rabbit", m_pRenderer))
-		//{
-		//	return false;
-		//}
-		////풀때기 이미지 추가
-		//if (!TheTextureManager::Instance()->load("Assets/grass.png", "grass", m_pRenderer))
-		//{
-		//	return false;
-		//}
+		if (!TheTextureManager::Instance()->load("Assets/simhyang.png", "mob1", m_pRenderer))
+		{
+			return false;
+		}
+		if (!TheTextureManager::Instance()->load("Assets/red.png", "mob2", m_pRenderer))
+		{
+			return false;
+		}
 
-		m_go.load(100, 100, 128, 82, "animate");
-		m_player.load(300, 300, 128, 82, "animate");
+		m_go = new GameObject();
+		m_player = new Player();
+		m_enemy = new Enemy();
+		m_monster1 = new Monster();
+		m_monster2 = new Monster();
+
+		m_go->load(100, 100, 128, 82, "animate");
+		m_player->load(300, 300, 128, 82, "animate");
+		m_enemy->load(0, 0, 128, 82, "animate");
+		m_monster1->load(0, 50, 64, 64, "mob1");
+		m_monster2->load(0, 100, 64, 64, "mob2");
+
+
+
+		//벡터 m_gameObjects 의 제일 뒤쪽에 각 게임오브젝트들을 넣어줌
+		m_gameObjects.push_back(m_go);
+		m_gameObjects.push_back(m_player);
+		m_gameObjects.push_back(m_enemy);
+		m_gameObjects.push_back(m_monster1);
+		m_gameObjects.push_back(m_monster2);
 	}
 	else
 	{
@@ -49,11 +67,11 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	//TheTextureManager::Instance()->draw("grass", 0, 0, 32, 32, m_pRenderer);
-	//TheTextureManager::Instance()->drawFrame("Rabbit", 0, 0, 32, 32, 1, m_currentFrame, m_pRenderer);
-
-	m_go.draw(m_pRenderer);
-	m_player.draw(m_pRenderer);
+	//벡터STL에 넣어준 오브젝트들을 그려준다. push_back 해준 오브젝트들을 탐색하며 draw 함수 실행
+	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->draw(m_pRenderer);
+	}
 
 	SDL_RenderPresent(m_pRenderer);
 }
@@ -63,8 +81,10 @@ void Game::update()
 	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	m_currentFrame2 = int(((SDL_GetTicks() / 50) % 6));
 
-	m_go.update();
-	m_player.update();
+	for (std::vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->update();
+	}
 }
 
 void Game::clean()
