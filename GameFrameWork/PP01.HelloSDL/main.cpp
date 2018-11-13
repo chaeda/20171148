@@ -1,7 +1,6 @@
-#include "game.h"
+#include "Game.h"
 
-
-Game* g_game = 0;
+Game* g_game = 0; //our Game Object
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +13,7 @@ int main(int argc, char* argv[])
 		g_game->update();
 		g_game->render();
 	}
-
+	SDL_Delay(5000);
 	g_game->clean();
 	return 0;
 }
