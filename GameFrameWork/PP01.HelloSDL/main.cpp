@@ -1,8 +1,6 @@
 #include "Game.h"
-#include <iostream>
-using namespace std;
 
-Game* g_game = 0;
+Game* g_game = 0; // our Game object
 
 int main(int argc, char* argv[])
 {
