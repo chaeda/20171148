@@ -18,41 +18,25 @@ bool Game::init(const char*title, int xpos, int ypos,
 		if (m_pWindow != 0)
 		{
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-
 		}
-		//SDL_Surface* pTempSurface = IMG_Load("Assets/animate.png");		
-		//SDL_Surface* pTempSurface = IMG_Load("Assets/animate-alpha.png");	//알파
 		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-		//m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-		//SDL_FreeSurface(pTempSurface);
-
-		//m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
 		if (!TheTextureManager::Instance()->load("Assets/animate-alpha.png", "animate", m_pRenderer))
 		{
 			return false;
 		}
-		//토끼 애니메이션 추가
-		if (!TheTextureManager::Instance()->load("Assets/animate-Rabbit.png", "Rabbit", m_pRenderer))
-		{
-			return false;
-		}
-		//풀때기 이미지 추가
-		if (!TheTextureManager::Instance()->load("Assets/grass.png", "grass", m_pRenderer))
-		{
-			return false;
-		}
+		////토끼 애니메이션 추가
+		//if (!TheTextureManager::Instance()->load("Assets/animate-Rabbit.png", "Rabbit", m_pRenderer))
+		//{
+		//	return false;
+		//}
+		////풀때기 이미지 추가
+		//if (!TheTextureManager::Instance()->load("Assets/grass.png", "grass", m_pRenderer))
+		//{
+		//	return false;
+		//}
 
-		//SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-
-		//m_sourceRectangle.w = 128;
-		//m_sourceRectangle.h = 82;
-
-		//원본 사각형 : m_sourceRectangle    대상 사각형 : m_destinationRectangle
-		//m_destinationRectangle.x = m_sourceRectangle.x = 0;
-		//m_destinationRectangle.y = m_sourceRectangle.y = 0;
-		//m_destinationRectangle.w = m_sourceRectangle.w;
-		//m_destinationRectangle.h = m_sourceRectangle.h;
-
+		m_go.load(100, 100, 128, 82, "animate");
+		m_player.load(300, 300, 128, 82, "animate");
 	}
 	else
 	{
@@ -65,29 +49,22 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	//원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남
-	//SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
-	//m_textureManager.draw("animate", 0, 0, 128, 82, m_pRenderer);
-	//m_textureManager.drawFrame("animate", 100, 100, 128, 82, 1, m_currentFrame, m_pRenderer);
-	/*TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82, m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("animate", 100, 100,128 ,82, 1, m_currentFrame, m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("animate", 200, 200, 128, 82, 1, m_currentFrame2, m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("animate", 300, 300, 128, 82, 1, ((SDL_GetTicks() / 25) % 6), m_pRenderer);*/
-
-
+	//TheTextureManager::Instance()->draw("grass", 0, 0, 32, 32, m_pRenderer);
 	//TheTextureManager::Instance()->drawFrame("Rabbit", 0, 0, 32, 32, 1, m_currentFrame, m_pRenderer);
-	TheTextureManager::Instance()->draw("grass", 0, 0, 32, 32, m_pRenderer);
-	TheTextureManager::Instance()->drawFrame("Rabbit", 0, 0, 32, 32, 1, m_currentFrame, m_pRenderer);
+
+	m_go.draw(m_pRenderer);
+	m_player.draw(m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
 
 void Game::update()
 {
-	//m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-	//m_destinationRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
 	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	m_currentFrame2 = int(((SDL_GetTicks() / 50) % 6));
+
+	m_go.update();
+	m_player.update();
 }
 
 void Game::clean()

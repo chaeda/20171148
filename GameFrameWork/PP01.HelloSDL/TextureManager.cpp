@@ -18,7 +18,6 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* pR
 		m_textureMap[id] = pTexture;
 		return true;
 	}
-
 	return false;
 }
 
