@@ -3,11 +3,14 @@
 
 class Player : public SDLGameObject
 {
-private:
-	void handleInput();
 public:
 	Player(const LoaderParams* pParams);
+	~Player() {}
+
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+
+private:
+	void handleInput();
 };
