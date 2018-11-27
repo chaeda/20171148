@@ -45,6 +45,9 @@ private:
 	static Game* s_pInstance;
 
 	GameStateMachine* m_pGameStateMachine;
+	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
 };
+
+
 // create the typedef
 typedef Game TheGame;

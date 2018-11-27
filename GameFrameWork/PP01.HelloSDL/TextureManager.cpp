@@ -55,4 +55,9 @@ void TextureManager::drawFrame(std::string id, int x, int y,
 		&destRect, 0, 0, flip);
 }
 
+void TextureManager::clearFromtheTextureMap(std::string id)
+{
+	m_textureMap.erase(id);
+}
+
 TextureManager* TextureManager::s_pInstance = 0;

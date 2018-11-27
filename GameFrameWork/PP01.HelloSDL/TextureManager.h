@@ -12,6 +12,7 @@ private:
 
 	TextureManager() {}
 
+
 public:
 	bool load(string fileName, string id, SDL_Renderer* pRenderer);
 
@@ -21,6 +22,10 @@ public:
 	void drawFrame(string id, int x, int y, int width, int height,
 		int currentRow, int currentFrame,
 		SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+	void clearFromtheTextureMap(std::string id);
+	
+
+
 
 	static TextureManager* Instance()
 	{
