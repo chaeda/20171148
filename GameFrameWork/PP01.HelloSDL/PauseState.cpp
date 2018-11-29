@@ -1,14 +1,17 @@
-/* #include "PauseState.h"
+ #include "PauseState.h"
 #include "TextureManager.h"
 #include "InputHandler.h"
+#include "MenuState.h"
+#include "Game.h"
 #include "MenuButton.h"
 
 const std::string PauseState::s_pauseID = "PAUSE";
+PauseState* PauseState::s_pInstance = NULL;
 
 void PauseState::s_pauseToMain()
 {
 	TheGame::Instance()->getStateMachine()->changeState(
-		new MenuState());
+	MenuState::Instance());
 }
 
 void PauseState::s_resumePlay()
@@ -68,4 +71,3 @@ bool PauseState::onExit()
     return true;
 }
 
-*/
