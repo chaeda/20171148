@@ -38,4 +38,7 @@ public:
 	}
 
 	~TextureManager() {}
+
 };
+
+typedef TextureManager TheTextureManager;

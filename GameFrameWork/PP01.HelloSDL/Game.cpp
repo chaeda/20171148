@@ -5,7 +5,9 @@
 #include "PlayState.h"
 #include <iostream>
 
+
 Game* Game::s_pInstance = 0;
+
 
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
@@ -41,18 +43,30 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	return true;
 }
 
+void Game::handleEvents()
+{
+	TheInputHandler::Instance()->update();
+
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
+	{
+		m_pGameStateMachine->changeState(PlayState::Instance());
+	}
+
+}
+
 void Game::render()
 {
 
 	SDL_RenderClear(m_pRenderer);
 
 	m_pGameStateMachine->render();
-
-	for (vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
-		m_gameObjects[i]->draw();
-
 	// È­¸é
 	SDL_RenderPresent(m_pRenderer);
+
+	//for (vector<GameObject*>::size_type i = 0; i != m_gameObjects.size(); i++)
+		//m_gameObjects[i]->draw();
+
+
 }
 
 void Game::update()
@@ -73,28 +87,4 @@ void Game::clean()
 	SDL_Quit();
 }
 
-void Game::handleEvents()
-{
-	TheInputHandler::Instance()->update();
 
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RETURN))
-	{
-		m_pGameStateMachine->changeState(PlayState::Instance());
-	}
-
-}
-
-Game *Game::Instance()
-{
-	if (s_pInstance == 0) {
-
-		s_pInstance = new Game();
-		return s_pInstance;
-	}
-	return s_pInstance;
-}
-
-void Game::quit()
-{
-	m_bRunning = false;
-}

@@ -10,10 +10,6 @@ const std::string MenuState::s_menuID = "MENU";
 
 MenuState* MenuState::s_pInstance = 0;
 
-MenuState::MenuState()
-{
-}
-
 void MenuState::update()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
@@ -29,6 +25,7 @@ void MenuState::render()
 		m_gameObjects[i]->draw();
 	}
 }
+
 
 bool MenuState::onEnter()
 {
@@ -56,6 +53,7 @@ bool MenuState::onEnter()
 	return true;
 }
 
+
 bool MenuState::onExit()
 {
 	for (int i = 0; i < m_gameObjects.size(); i++)
@@ -75,8 +73,8 @@ bool MenuState::onExit()
 void MenuState::s_menuToPlay()
 {
 	std::cout << "Play button clicked\n";
-	// TheGame::Instance()->getStateMachine()->changeState(
-		// new PlayState());
+	TheGame::Instance()->getStateMachine()->changeState(
+	PlayState::Instance());
 }
 
 void MenuState::s_exitFromMenu()
@@ -85,3 +83,11 @@ void MenuState::s_exitFromMenu()
 	TheGame::Instance()->quit();
 
 }
+
+
+MenuState::MenuState()
+{
+}
+
+
+

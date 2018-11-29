@@ -12,42 +12,52 @@ using namespace std;
 
 class Game
 {
+private:
+	Game() {};
+	static Game* s_pInstance;
 
 public:
-	vector<GameObject*> m_gameObjects;
-
-	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
-
+	~Game() {}
+	bool init(const char* title, int xpos, int ypos,
+		int width, int height, bool fullscreen);
 	void render();
 	void update();
 	void handleEvents();
 	void clean();
-	void quit();
 	bool running() { return m_bRunning; }
-
-	static Game* Instance();
+	void quit() { m_bRunning = false; }
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
+	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
+
+	static Game* Instance()
+	{
+		if (s_pInstance == 0)
+		{
+			s_pInstance = new Game();
+			return s_pInstance;
+		}
+		return s_pInstance;
+	}
 
 private:
-	Game() {};
-
 	SDL_Window * m_pWindow;
 	SDL_Renderer* m_pRenderer;
-	SDL_RendererFlip* m_pRendererFlip;
-
-	int m_currentFrame;
-	TextureManager* m_textureManager;
-
 	bool m_bRunning;
+	int m_currentFrame;
 
-	// create the s_pInstance member variable
-	static Game* s_pInstance;
+	//GameObject m_go;
+	//Player m_player;
+
+	std::vector<GameObject*> m_gameObjects;
+
+	// GameObject* m_go;
+	// GameObject* m_player;
+	// GameObject* m_enemy;
 
 	GameStateMachine* m_pGameStateMachine;
-	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
+
+
 };
 
-
-// create the typedef
 typedef Game TheGame;
