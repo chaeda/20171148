@@ -11,6 +11,12 @@ public:
 	virtual void draw();
 	virtual void update();
 	virtual void clean();
+
+	Vector2D& getPosition() { return m_position; }
+	int getWidth() { return m_width; }
+	int getHeight() { return m_height; }
+	int m_numFrames;
+
 protected:
 	//int m_x;
 	//int m_y;   
